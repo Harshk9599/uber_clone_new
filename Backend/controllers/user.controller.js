@@ -51,5 +51,21 @@ module.exports.loginUser = async(req, res, next) =>{
 
     const token = user.generateAuthToken();
 
+    res.cookie('token', token);
+
+
+// for production
+
+    // res.cookie('token', token, {
+    //     httponly : true,
+    //     secure : process.env.NODE_ENV === 'production',
+    //     maxAge : 3600000
+    // })
+
     res.status(201).json({token, user});
+}
+
+
+module.exports.getUserProfile = async(req, res, next) =>{
+    res.status(200).json(req.user);
 }
